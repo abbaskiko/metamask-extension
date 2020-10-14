@@ -396,6 +396,7 @@ export default function ViewQuote () {
     ),
     initialGasPrice: gasPrice,
     initialGasLimit: maxGasLimit,
+    minimumGasLimit: nonCustomMaxGasLimit,
   }))
 
   const tokenApprovalTextComponent = (
