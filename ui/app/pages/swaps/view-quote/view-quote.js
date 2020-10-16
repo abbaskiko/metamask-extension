@@ -378,9 +378,8 @@ export default function ViewQuote () {
   }
 
   const onFeeCardMaxRowClick = () => dispatch(showModal({
-    name: 'CUSTOMIZE_GAS',
-    txData: { txParams: { ...tradeTxParams, gas: maxGasLimit } },
-    isSwap: true,
+    name: 'CUSTOMIZE_METASWAP_GAS',
+    txParams: tradeTxParams,
     customGasLimitMessage: (
       approveGas
         ? t('extraApprovalGas', [hexToDecimal(approveGas)])
@@ -395,10 +394,8 @@ export default function ViewQuote () {
         }
         : null
     ),
-    useFastestButtons: true,
-    minimumGasLimit: Number(hexToDecimal(nonCustomMaxGasLimit)),
-    noFetchOnMount: true,
-    hideAdvancedTimeEstimates: true,
+    initialGasPrice: gasPrice,
+    initialGasLimit: maxGasLimit,
   }))
 
   const tokenApprovalTextComponent = (
