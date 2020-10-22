@@ -141,6 +141,24 @@ const AGGREGATOR_METADATA_VALIDATORS = [
   },
 ]
 
+const SWAP_GAS_PRICE_VALIDATOR = [
+  {
+    property: 'SafeGasPrice',
+    type: 'string',
+    validator: (string) => !isNaN(string) && !isNaN(parseFloat(string)),
+  },
+  {
+    property: 'ProposeGasPrice',
+    type: 'string',
+    validator: (string) => !isNaN(string) && !isNaN(parseFloat(string)),
+  },
+  {
+    property: 'FastGasPrice',
+    type: 'string',
+    validator: (string) => !isNaN(string) && !isNaN(parseFloat(string)),
+  },
+]
+
 function validateData (validators, object, urlUsed) {
   return validators.every(({ property, type, validator }) => {
     const types = type.split('|')
@@ -268,19 +286,23 @@ export async function fetchTokenBalance (address, userAddress) {
 }
 
 export async function fetchSwapsGasPrices () {
-  const response = await fetchWithCache(getBaseApi('gasPrices'), { method: 'GET' }, { cacheRefreshTime: 15000 })
+  const gasPricesUrl = getBaseApi('gasPrices')
+  const response = await fetchWithCache(gasPricesUrl, { method: 'GET' }, { cacheRefreshTime: 15000 })
+  const responseIsValid = validateData(SWAP_GAS_PRICE_VALIDATOR, response, gasPricesUrl)
+
+  if (!responseIsValid) {
+    return {}
+  }
 
   const {
     SafeGasPrice: safeLow,
     ProposeGasPrice: average,
     FastGasPrice: fast,
-    LastBlock: blockNum,
   } = response
 
   return {
     safeLow,
     average,
-    blockNum,
     fast,
   }
 }
