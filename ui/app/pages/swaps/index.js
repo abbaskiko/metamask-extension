@@ -24,7 +24,6 @@ import {
   prepareToLeaveSwaps,
   fetchAndSetSwapsGasPriceInfo,
 } from '../../ducks/swaps/swaps'
-import { resetCustomGasState } from '../../ducks/gas/gas.duck'
 import {
   AWAITING_SWAP_ROUTE,
   BUILD_QUOTE_ROUTE,
@@ -154,7 +153,6 @@ export default function Swap () {
         dispatch(setAggregatorMetadata(newAggregatorMetadata))
       })
 
-    dispatch(resetCustomGasState())
     dispatch(fetchAndSetSwapsGasPriceInfo())
 
     return () => {
