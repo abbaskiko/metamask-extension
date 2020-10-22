@@ -28,7 +28,7 @@ import { AWAITING_SWAP_ROUTE, BUILD_QUOTE_ROUTE, LOADING_QUOTES_ROUTE, SWAPS_ERR
 import { fetchSwapsFeatureLiveness, fetchSwapsGasPrices } from '../../pages/swaps/swaps.util'
 import { calcGasTotal } from '../../pages/send/send.utils'
 import { decimalToHex, getValueFromWeiHex, hexMax, decGWEIToHexWEI, hexToDecimal, decEthToConvertedCurrency, hexWEIToDecGWEI } from '../../helpers/utils/conversions.util'
-import { conversionGreaterThan } from '../../helpers/utils/conversion-util'
+import { conversionGTE } from '../../helpers/utils/conversion-util'
 import { calcTokenAmount } from '../../helpers/utils/token-util'
 import {
   getFastPriceEstimateInHexWEI,
@@ -171,7 +171,7 @@ export function isCustomSwapsGasPriceSafe (state) {
     return false
   }
 
-  const customPriceSafe = conversionGreaterThan(
+  const customPriceSafe = conversionGTE(
     {
       value: customGasPrice,
       fromNumericBase: 'hex',
