@@ -41,10 +41,19 @@ export default class GasModalPageContainer extends Component {
     setSwapsCustomizationModalPrice: PropTypes.func,
     setSwapsCustomizationModalLimit: PropTypes.func,
     gasEstimateLoadingHasFailed: PropTypes.bool,
+    averageGasPriceInHexWei: PropTypes.string,
   }
 
   state = {
-    selectedTab: 'Basic',
+    gasSpeedType: '',
+  }
+
+  setGasSpeedType (gasPriceInHexWei) {
+    if (gasPriceInHexWei === this.props.averageGasPriceInHexWei) {
+      this.setState({ gasSpeedType: 'average' })
+    } else {
+      this.setState({ gasSpeedType: 'fast' })
+    }
   }
 
   renderBasicTabContent (gasPriceButtonGroupProps) {
@@ -52,7 +61,10 @@ export default class GasModalPageContainer extends Component {
       <BasicTabContent
         gasPriceButtonGroupProps={{
           ...gasPriceButtonGroupProps,
-          handleGasPriceSelection: this.props.setSwapsCustomizationModalPrice,
+          handleGasPriceSelection: (gasPriceInHexWei) => {
+            this.setGasSpeedType(gasPriceInHexWei)
+            this.props.setSwapsCustomizationModalPrice(gasPriceInHexWei)
+          },
         }}
       />
     )
@@ -87,8 +99,14 @@ export default class GasModalPageContainer extends Component {
         <div className="advanced-tab__fee-chart">
           <div className="advanced-tab__gas-inputs">
             <AdvancedGasInputs
-              updateCustomGasPrice={setSwapsCustomizationModalPrice}
-              updateCustomGasLimit={setSwapsCustomizationModalLimit}
+              updateCustomGasPrice={(updatedPrice) => {
+                this.setState({ gasSpeedType: 'custom' })
+                setSwapsCustomizationModalPrice(updatedPrice)
+              }}
+              updateCustomGasLimit={(updatedLimit) => {
+                this.setState({ gasSpeedType: 'custom' })
+                setSwapsCustomizationModalLimit(updatedLimit)
+              }}
               customGasPrice={customGasPrice}
               customGasLimit={customGasLimit}
               insufficientBalance={insufficientBalance}
@@ -161,7 +179,7 @@ export default class GasModalPageContainer extends Component {
       : [basicTabInfo, advancedTabInfo]
 
     return (
-      <Tabs onTabClick={(tabName) => this.setState({ selectedTab: tabName })}>
+      <Tabs>
         {tabsToRender.map(({ name, content }, i) => (
           <Tab name={name} key={`gas-modal-tab-${i}`}>
             <div className="gas-modal-content">
@@ -194,19 +212,12 @@ export default class GasModalPageContainer extends Component {
           onClose={() => cancelAndClose()}
           onSubmit={() => {
             const newSwapGasTotal = calcGasTotal(customGasLimit, customGasPrice)
-            let speedSet = ''
-            if (this.state.selectedTab === 'Basic') {
-              const { gasButtonInfo } = this.props.gasPriceButtonGroupProps
-              const selectedGasButtonInfo = gasButtonInfo.find(({ priceInHexWei }) => priceInHexWei === customGasPrice)
-              speedSet = selectedGasButtonInfo?.gasEstimateType || ''
-            }
 
             this.context.trackEvent({
               event: 'Gas Fees Changed',
               category: 'swaps',
               properties: {
-                speed_set: speedSet,
-                gas_mode: this.state.selectedTab,
+                speed_set: this.state.gasSpeedType,
                 gas_fees: sumHexWEIsToRenderableFiat([this.props.value, newSwapGasTotal, this.props.customTotalSupplement], 'usd', this.props.conversionRate)?.slice(1),
               },
             })

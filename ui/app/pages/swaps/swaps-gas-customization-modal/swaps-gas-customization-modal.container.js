@@ -91,6 +91,7 @@ const mapStateToProps = (state) => {
   return {
     customGasPrice,
     customGasLimit,
+    averageGasPriceInHexWei: averageEstimateData?.priceInHexWei,
     customPriceIsSafe: !isCustomSwapsGasPriceSafe(state),
     gasPriceButtonGroupProps: {
       buttonDataLoading,
