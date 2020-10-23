@@ -210,7 +210,7 @@ export default class GasModalPageContainer extends Component {
                 gas_fees: sumHexWEIsToRenderableFiat([this.props.value, newSwapGasTotal, this.props.customTotalSupplement], 'usd', this.props.conversionRate)?.slice(1),
               },
             })
-            onSubmit(customGasLimit, customGasPrice, this.state.selectedTab, this.context.mixPanelTrack)
+            onSubmit(customGasLimit, customGasPrice)
           }}
           submitText={this.context.t('save')}
           headerCloseText={this.context.t('close')}
