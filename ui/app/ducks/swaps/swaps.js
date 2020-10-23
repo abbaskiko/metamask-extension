@@ -638,9 +638,9 @@ export function fetchMetaSwapsGasPriceEstimates () {
         const gasPriceInDecGWEI = hexWEIToDecGWEI(gasPrice.toString(10))
 
         dispatch(retrievedFallbackSwapsGasPrice(gasPriceInDecGWEI))
-
-        return null
-      } catch (e2) {
+      } catch (networkGasPriceError) {
+        console.error(`Failed to retrieve fallback gas price: `, networkGasPriceError)
+      } finally {
         return null
       }
     }
