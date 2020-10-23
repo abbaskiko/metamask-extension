@@ -3,6 +3,7 @@ import React from 'react'
 import sinon from 'sinon'
 import shallow from '../../../../../../lib/shallow-with-context'
 import GasPriceButtonGroup from '../gas-price-button-group.component'
+import { GAS_ESTIMATE_TYPES } from '../../../../../helpers/constants/common'
 
 import ButtonGroup from '../../../../ui/button-group'
 
@@ -17,18 +18,21 @@ describe('GasPriceButtonGroup Component', function () {
       className: 'gas-price-button-group',
       gasButtonInfo: [
         {
+          gasEstimateType: GAS_ESTIMATE_TYPES.SLOW,
           feeInPrimaryCurrency: '$0.52',
           feeInSecondaryCurrency: '0.0048 ETH',
           timeEstimate: '~ 1 min 0 sec',
           priceInHexWei: '0xa1b2c3f',
         },
         {
+          gasEstimateType: GAS_ESTIMATE_TYPES.AVERAGE,
           feeInPrimaryCurrency: '$0.39',
           feeInSecondaryCurrency: '0.004 ETH',
           timeEstimate: '~ 1 min 30 sec',
           priceInHexWei: '0xa1b2c39',
         },
         {
+          gasEstimateType: GAS_ESTIMATE_TYPES.FAST,
           feeInPrimaryCurrency: '$0.30',
           feeInSecondaryCurrency: '0.00354 ETH',
           timeEstimate: '~ 2 min 1 sec',
@@ -107,6 +111,8 @@ describe('GasPriceButtonGroup Component', function () {
     let wrappedRenderButtonResult
 
     beforeEach(function () {
+      sinon.restore()
+      sinon.stub(GasPriceButtonGroup.prototype, 'renderButtonContent')
       GasPriceButtonGroup.prototype.renderButtonContent.resetHistory()
       const renderButtonResult = GasPriceButtonGroup.prototype.renderButton(
         { ...mockGasPriceButtonGroupProps.gasButtonInfo[0] },
@@ -125,7 +131,7 @@ describe('GasPriceButtonGroup Component', function () {
       assert.equal(mockGasPriceButtonGroupProps.handleGasPriceSelection.callCount, 1)
       assert.deepEqual(
         mockGasPriceButtonGroupProps.handleGasPriceSelection.getCall(0).args,
-        [mockGasPriceButtonGroupProps.gasButtonInfo[0].priceInHexWei],
+        [mockGasPriceButtonGroupProps.gasButtonInfo[0].priceInHexWei, mockGasPriceButtonGroupProps.gasButtonInfo[0].gasEstimateType],
       )
     })
 
@@ -135,6 +141,7 @@ describe('GasPriceButtonGroup Component', function () {
         feeInPrimaryCurrency,
         feeInSecondaryCurrency,
         timeEstimate,
+        gasEstimateType,
       } = mockGasPriceButtonGroupProps.gasButtonInfo[0]
       const {
         showCheck,
@@ -144,6 +151,7 @@ describe('GasPriceButtonGroup Component', function () {
         GasPriceButtonGroup.prototype.renderButtonContent.getCall(0).args,
         [
           {
+            gasEstimateType,
             feeInPrimaryCurrency,
             feeInSecondaryCurrency,
             timeEstimate,

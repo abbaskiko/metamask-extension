@@ -8,6 +8,7 @@ import {
 } from '../../../helpers/utils/conversions.util'
 import AdvancedGasInputs from '../../../components/app/gas-customization/advanced-gas-inputs'
 import BasicTabContent from '../../../components/app/gas-customization/gas-modal-page-container/basic-tab-content'
+import { GAS_ESTIMATE_TYPES } from '../../../helpers/constants/common'
 
 export default class GasModalPageContainer extends Component {
   static contextTypes = {
@@ -40,15 +41,14 @@ export default class GasModalPageContainer extends Component {
     setSwapsCustomizationModalPrice: PropTypes.func,
     setSwapsCustomizationModalLimit: PropTypes.func,
     gasEstimateLoadingHasFailed: PropTypes.bool,
-    averageGasPriceInHexWei: PropTypes.string,
   }
 
   state = {
     gasSpeedType: '',
   }
 
-  setGasSpeedType (gasPriceInHexWei) {
-    if (gasPriceInHexWei === this.props.averageGasPriceInHexWei) {
+  setGasSpeedType (gasEstimateType) {
+    if (gasEstimateType === GAS_ESTIMATE_TYPES.AVERAGE) {
       this.setState({ gasSpeedType: 'average' })
     } else {
       this.setState({ gasSpeedType: 'fast' })
@@ -60,8 +60,8 @@ export default class GasModalPageContainer extends Component {
       <BasicTabContent
         gasPriceButtonGroupProps={{
           ...gasPriceButtonGroupProps,
-          handleGasPriceSelection: (gasPriceInHexWei) => {
-            this.setGasSpeedType(gasPriceInHexWei)
+          handleGasPriceSelection: (gasPriceInHexWei, gasEstimateType) => {
+            this.setGasSpeedType(gasEstimateType)
             this.props.setSwapsCustomizationModalPrice(gasPriceInHexWei)
           },
         }}
