@@ -12,7 +12,6 @@ import BasicTabContent from '../../../components/app/gas-customization/gas-modal
 export default class GasModalPageContainer extends Component {
   static contextTypes = {
     t: PropTypes.func,
-    metricsEvent: PropTypes.func,
     trackEvent: PropTypes.func,
   }
 
