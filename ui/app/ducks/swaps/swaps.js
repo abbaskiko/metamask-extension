@@ -108,42 +108,24 @@ const slice = createSlice({
       state.toToken = action.payload
     },
     swapCustomGasModalPriceEdited: (state, action) => {
-      state.customGas = {
-        ...state.customGas,
-        price: action.payload,
-      }
+      state.customGas.price = action.payload
     },
     swapCustomGasModalLimitEdited: (state, action) => {
-      state.customGas = {
-        ...state.customGas,
-        limit: action.payload,
-      }
+      state.customGas.limit = action.payload
     },
     swapGasPriceEstimatesFetchStarted: (state) => {
-      state.customGas = {
-        ...state.customGas,
-        loading: GAS_PRICES_LOADING_STATES.LOADING,
-      }
+      state.customGas.loading = GAS_PRICES_LOADING_STATES.LOADING
     },
     swapGasPriceEstimatesFetchFailed: (state) => {
-      state.customGas = {
-        ...state.customGas,
-        loading: GAS_PRICES_LOADING_STATES.FAILED,
-      }
+      state.customGas.loading = GAS_PRICES_LOADING_STATES.FAILED
     },
     swapGasPriceEstimatesFetchCompleted: (state, action) => {
-      state.customGas = {
-        ...state.customGas,
-        priceEstimates: action.payload.priceEstimates,
-        loading: GAS_PRICES_LOADING_STATES.COMPLETED,
-        priceEstimatesLastRetrieved: action.payload.priceEstimatesLastRetrieved,
-      }
+      state.customGas.priceEstimates = action.payload.priceEstimates
+      state.customGas.loading = GAS_PRICES_LOADING_STATES.COMPLETED
+      state.customGas.priceEstimatesLastRetrieved = action.payload.priceEstimatesLastRetrieved
     },
     retrievedFallbackSwapsGasPrice: (state, action) => {
-      state.customGas = {
-        ...state.customGas,
-        fallBackPrice: action.payload,
-      }
+      state.customGas.fallBackPrice = action.payload
     },
   },
 })
