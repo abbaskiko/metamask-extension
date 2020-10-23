@@ -14,11 +14,13 @@ import {
 import {
   getSwapsCustomizationModalPrice,
   getSwapsCustomizationModalLimit,
-  getSwapGasEstimateLoadingStatus,
+  swapGasEstimateLoadingHasFailed,
+  swapGasPriceEstimateIsLoading,
   getSwapGasPriceEstimateData,
   swapCustomGasModalPriceEdited,
   swapCustomGasModalLimitEdited,
   isCustomSwapsGasPriceSafe,
+  getSwapsFallbackGasPrice,
 } from '../../../ducks/swaps/swaps'
 
 import {
@@ -48,12 +50,12 @@ const mapStateToProps = (state) => {
     initialGasPrice,
     initialGasLimit,
   } = modalProps || {}
-  const buttonDataLoading = getSwapGasEstimateLoadingStatus(state)
+  const buttonDataLoading = swapGasPriceEstimateIsLoading(state)
 
   const swapsCustomizationModalPrice = getSwapsCustomizationModalPrice(state)
   const swapsCustomizationModalLimit = getSwapsCustomizationModalLimit(state)
 
-  const customGasPrice = swapsCustomizationModalPrice || initialGasPrice
+  const customGasPrice = swapsCustomizationModalPrice || initialGasPrice || getSwapsFallbackGasPrice(state)
   const customGasLimit = swapsCustomizationModalLimit || initialGasLimit
 
   const { value } = txParams
@@ -110,6 +112,7 @@ const mapStateToProps = (state) => {
       sendAmount,
       extraInfoRow,
     },
+    gasEstimateLoadingHasFailed: swapGasEstimateLoadingHasFailed(state),
     insufficientBalance,
     customGasLimitMessage,
     conversionRate,

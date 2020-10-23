@@ -541,7 +541,7 @@ export default function ViewQuote () {
         }}
         submitText={t('swap')}
         onCancel={async () => await dispatch(navigateBackToBuildQuote(history))}
-        disabled={balanceError}
+        disabled={balanceError || (gasPrice === null || gasPrice === undefined)}
         showTermsOfService
         showTopBorder
       />

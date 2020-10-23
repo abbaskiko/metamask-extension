@@ -40,6 +40,7 @@ export default class GasModalPageContainer extends Component {
     customGasLimit: PropTypes.string,
     setSwapsCustomizationModalPrice: PropTypes.func,
     setSwapsCustomizationModalLimit: PropTypes.func,
+    gasEstimateLoadingHasFailed: PropTypes.bool,
   }
 
   state = {
@@ -140,21 +141,24 @@ export default class GasModalPageContainer extends Component {
         transactionFee,
         extraInfoRow,
       },
+      gasEstimateLoadingHasFailed,
     } = this.props
 
-    const tabsToRender = [
-      {
-        name: this.context.t('basic'),
-        content: this.renderBasicTabContent({
-          ...gasPriceButtonGroupProps,
-          handleGasPriceSelection: this.props.setSwapsCustomizationModalPrice,
-        }),
-      },
-      {
-        name: this.context.t('advanced'),
-        content: this.renderAdvancedTabContent(),
-      },
-    ]
+    const basicTabInfo = {
+      name: this.context.t('basic'),
+      content: this.renderBasicTabContent({
+        ...gasPriceButtonGroupProps,
+        handleGasPriceSelection: this.props.setSwapsCustomizationModalPrice,
+      }),
+    }
+    const advancedTabInfo = {
+      name: this.context.t('advanced'),
+      content: this.renderAdvancedTabContent(),
+    }
+
+    const tabsToRender = gasEstimateLoadingHasFailed
+      ? [advancedTabInfo]
+      : [basicTabInfo, advancedTabInfo]
 
     return (
       <Tabs onTabClick={(tabName) => this.setState({ selectedTab: tabName })}>
