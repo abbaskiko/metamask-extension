@@ -116,8 +116,10 @@ const mapStateToProps = (state) => {
     gasEstimateLoadingHasFailed: swapGasEstimateLoadingHasFailed(state),
     insufficientBalance,
     customGasLimitMessage,
+    customTotalSupplement,
     conversionRate,
     value,
+    disableSave: insufficientBalance,
   }
 }
 
