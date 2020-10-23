@@ -631,6 +631,12 @@ export function fetchMetaSwapsGasPriceEstimates () {
         priceEstimates = cachedPriceEstimates || await fetchSwapsGasPrices()
       }
     } catch (e) {
+      log.warn('Fetching swaps gas prices failed:', e)
+
+      if (!e.message?.match(/NetworkError|Fetch failed with status:/u)) {
+        throw e
+      }
+
       dispatch(swapGasPriceEstimatesFetchFailed())
 
       try {
@@ -638,9 +644,9 @@ export function fetchMetaSwapsGasPriceEstimates () {
         const gasPriceInDecGWEI = hexWEIToDecGWEI(gasPrice.toString(10))
 
         dispatch(retrievedFallbackSwapsGasPrice(gasPriceInDecGWEI))
+        return null
       } catch (networkGasPriceError) {
         console.error(`Failed to retrieve fallback gas price: `, networkGasPriceError)
-      } finally {
         return null
       }
     }
