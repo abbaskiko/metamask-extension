@@ -296,10 +296,6 @@ const MODALS = {
     contentStyle: {
       borderRadius: '8px',
     },
-    customOnHideOpts: {
-      action: resetCustomGasData,
-      args: [],
-    },
   },
 
   EDIT_APPROVAL_PERMISSION: {
