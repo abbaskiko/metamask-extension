@@ -19,7 +19,7 @@ import {
   getSwapGasPriceEstimateData,
   swapCustomGasModalPriceEdited,
   swapCustomGasModalLimitEdited,
-  isCustomSwapsGasPriceUnSafe,
+  shouldShowCustomPriceTooLowWarning,
   getSwapsFallbackGasPrice,
 } from '../../../ducks/swaps/swaps'
 
@@ -91,7 +91,7 @@ const mapStateToProps = (state) => {
   return {
     customGasPrice,
     customGasLimit,
-    customPriceIsSafe: !isCustomSwapsGasPriceUnSafe(state),
+    showCustomPriceTooLowWarning: shouldShowCustomPriceTooLowWarning(state),
     gasPriceButtonGroupProps: {
       buttonDataLoading,
       defaultActiveButtonIndex: getDefaultActiveButtonIndex(gasButtonInfo, customGasPrice),

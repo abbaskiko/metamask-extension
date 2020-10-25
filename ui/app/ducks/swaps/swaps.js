@@ -28,7 +28,7 @@ import { AWAITING_SWAP_ROUTE, BUILD_QUOTE_ROUTE, LOADING_QUOTES_ROUTE, SWAPS_ERR
 import { fetchSwapsFeatureLiveness, fetchSwapsGasPrices } from '../../pages/swaps/swaps.util'
 import { calcGasTotal } from '../../pages/send/send.utils'
 import { decimalToHex, getValueFromWeiHex, hexMax, decGWEIToHexWEI, hexToDecimal, decEthToConvertedCurrency, hexWEIToDecGWEI } from '../../helpers/utils/conversions.util'
-import { conversionGTE } from '../../helpers/utils/conversion-util'
+import { conversionLessThan } from '../../helpers/utils/conversion-util'
 import { calcTokenAmount } from '../../helpers/utils/token-util'
 import {
   getFastPriceEstimateInHexWEI,
@@ -164,7 +164,7 @@ export const getSwapsPriceEstimatesLastRetrieved = (state) => state.swaps.custom
 
 export const getSwapsFallbackGasPrice = (state) => state.swaps.customGas.fallBackPrice
 
-export function isCustomSwapsGasPriceUnSafe (state) {
+export function shouldShowCustomPriceTooLowWarning (state) {
   const { average } = getSwapGasPriceEstimateData(state)
 
   const customGasPrice = getSwapsCustomizationModalPrice(state)
@@ -173,7 +173,7 @@ export function isCustomSwapsGasPriceUnSafe (state) {
     return false
   }
 
-  const customPriceSafe = conversionGTE(
+  const customPriceRisksSwapFailure = conversionLessThan(
     {
       value: customGasPrice,
       fromNumericBase: 'hex',
@@ -183,7 +183,7 @@ export function isCustomSwapsGasPriceUnSafe (state) {
     { value: average, fromNumericBase: 'dec' },
   )
 
-  return !customPriceSafe
+  return customPriceRisksSwapFailure
 }
 
 // Background selectors

@@ -30,7 +30,7 @@ export default class GasModalPageContainer extends Component {
     }),
     onSubmit: PropTypes.func,
     cancelAndClose: PropTypes.func,
-    customPriceIsSafe: PropTypes.bool,
+    showCustomPriceTooLowWarning: PropTypes.bool,
     disableSave: PropTypes.bool,
     customGasLimitMessage: PropTypes.string,
     customTotalSupplement: PropTypes.string,
@@ -72,7 +72,7 @@ export default class GasModalPageContainer extends Component {
   renderAdvancedTabContent () {
     const {
       insufficientBalance,
-      customPriceIsSafe,
+      showCustomPriceTooLowWarning,
       infoRowProps: {
         transactionFee,
       },
@@ -109,7 +109,7 @@ export default class GasModalPageContainer extends Component {
               customGasPrice={customGasPrice}
               customGasLimit={customGasLimit}
               insufficientBalance={insufficientBalance}
-              customPriceIsSafe={customPriceIsSafe}
+              customPriceIsSafe={!showCustomPriceTooLowWarning}
               customGasLimitMessage={customGasLimitMessage}
             />
           </div>
