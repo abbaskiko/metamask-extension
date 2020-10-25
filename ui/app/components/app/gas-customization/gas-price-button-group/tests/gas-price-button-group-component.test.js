@@ -111,10 +111,8 @@ describe('GasPriceButtonGroup Component', function () {
     let wrappedRenderButtonResult
 
     beforeEach(function () {
-      sinon.restore()
-      sinon.stub(GasPriceButtonGroup.prototype, 'renderButtonContent')
       GasPriceButtonGroup.prototype.renderButtonContent.resetHistory()
-      const renderButtonResult = GasPriceButtonGroup.prototype.renderButton(
+      const renderButtonResult = wrapper.instance().renderButton(
         { ...mockGasPriceButtonGroupProps.gasButtonInfo[0] },
         mockButtonPropsAndFlags,
       )
