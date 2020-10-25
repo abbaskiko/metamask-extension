@@ -20,7 +20,6 @@ import {
   swapCustomGasModalPriceEdited,
   swapCustomGasModalLimitEdited,
   shouldShowCustomPriceTooLowWarning,
-  getSwapsFallbackGasPrice,
 } from '../../../ducks/swaps/swaps'
 
 import {
@@ -55,7 +54,7 @@ const mapStateToProps = (state) => {
   const swapsCustomizationModalPrice = getSwapsCustomizationModalPrice(state)
   const swapsCustomizationModalLimit = getSwapsCustomizationModalLimit(state)
 
-  const customGasPrice = swapsCustomizationModalPrice || initialGasPrice || getSwapsFallbackGasPrice(state)
+  const customGasPrice = swapsCustomizationModalPrice || initialGasPrice
   const customGasLimit = swapsCustomizationModalLimit || initialGasLimit
 
   const { value } = txParams
