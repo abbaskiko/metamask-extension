@@ -31,7 +31,6 @@ import { decimalToHex, getValueFromWeiHex, hexMax, decGWEIToHexWEI, hexToDecimal
 import { conversionLessThan } from '../../helpers/utils/conversion-util'
 import { calcTokenAmount } from '../../helpers/utils/token-util'
 import {
-  getFastPriceEstimateInHexWEI,
   getSelectedAccount,
   getTokenExchangeRates,
   conversionRateSelector as getConversionRate,
@@ -232,17 +231,7 @@ export const getUsedQuote = (state) => getSelectedQuote(state) || getTopQuote(st
 
 export const getDestinationTokenInfo = (state) => getFetchParams(state)?.metaData?.destinationTokenInfo
 
-export const getSwapsTradeTxParams = (state) => {
-  const { selectedAggId, topAggId, quotes } = getSwapsState(state)
-  const usedQuote = selectedAggId ? quotes[selectedAggId] : quotes[topAggId]
-  if (!usedQuote) {
-    return null
-  }
-  const { trade } = usedQuote
-  const gas = getCustomSwapsGas(state) || trade.gas
-  const gasPrice = getCustomSwapsGasPrice(state) || trade.gasPrice || getSwapsFallbackGasPrice(state)
-  return { ...trade, gas, gasPrice }
-}
+export const getUsedSwapsGasPrice = (state) => getCustomSwapsGasPrice(state) || getSwapsFallbackGasPrice(state)
 
 export const getApproveTxParams = (state) => {
   const { approvalNeeded } = getSelectedQuote(state) || getTopQuote(state) || {}
@@ -513,18 +502,17 @@ export const signAndSendTransactions = (history, metaMetricsEvent) => {
     await dispatch(stopPollingForQuotes())
     history.push(AWAITING_SWAP_ROUTE)
 
+    const { fast: fastGasEstimate } = getSwapGasPriceEstimateData(state)
+
     const usedQuote = getUsedQuote(state)
     const usedTradeTxParams = usedQuote.trade
 
     const estimatedGasLimit = new BigNumber(usedQuote?.gasEstimate || decimalToHex(usedQuote?.averageGas || 0), 16)
     const estimatedGasLimitWithMultiplier = estimatedGasLimit.times(1.4, 10).round(0).toString(16)
     const maxGasLimit = customSwapsGas || hexMax((`0x${decimalToHex(usedQuote?.maxGas || 0)}`), estimatedGasLimitWithMultiplier)
-    usedTradeTxParams.gas = maxGasLimit
 
-    const customConvertGasPrice = getCustomSwapsGasPrice(state)
-    const tradeTxParams = getSwapsTradeTxParams(state)
-    const fastGasEstimate = getFastPriceEstimateInHexWEI(state)
-    const usedGasPrice = customConvertGasPrice || tradeTxParams?.gasPrice || fastGasEstimate
+    const usedGasPrice = getUsedSwapsGasPrice(state)
+    usedTradeTxParams.gas = maxGasLimit
     usedTradeTxParams.gasPrice = usedGasPrice
 
     const conversionRate = getConversionRate(state)
@@ -557,8 +545,8 @@ export const signAndSendTransactions = (history, metaMetricsEvent) => {
       other_quote_selected_source: usedQuote.aggregator === getTopQuote(state)?.aggregator ? '' : usedQuote.aggregator,
       gas_fees: formatCurrency(gasEstimateTotalInEth, 'usd')?.slice(1),
       estimated_gas: estimatedGasLimit.toString(10),
-      suggested_gas_price: hexWEIToDecGWEI(usedGasPrice),
-      used_gas_price: hexWEIToDecGWEI(fastGasEstimate),
+      suggested_gas_price: fastGasEstimate,
+      used_gas_price: hexWEIToDecGWEI(usedGasPrice),
       average_savings: averageSavings,
     }
 

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import {
   hideModal,
-  setSwapsTxGasParams,
+  customSwapsGasParamsUpdated,
 } from '../../../store/actions'
 import {
   conversionRateSelector as getConversionRate,
@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
 
   const { modalState: { props: modalProps } = {} } = state.appState.modal || {}
   const {
-    txParams = {},
+    value,
     customGasLimitMessage = '',
     customTotalSupplement = '',
     extraInfoRow = null,
@@ -57,7 +57,6 @@ const mapStateToProps = (state) => {
   const customGasPrice = swapsCustomizationModalPrice || initialGasPrice
   const customGasLimit = swapsCustomizationModalLimit || initialGasLimit
 
-  const { value } = txParams
   const customGasTotal = calcGasTotal(customGasLimit, customGasPrice)
 
   const swapsGasPriceEstimates = getSwapGasPriceEstimateData(state)
@@ -128,7 +127,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(hideModal())
     },
     onSubmit: (gasLimit, gasPrice) => {
-      dispatch(setSwapsTxGasParams(gasLimit, gasPrice))
+      dispatch(customSwapsGasParamsUpdated(gasLimit, gasPrice))
       dispatch(hideModal())
     },
     setSwapsCustomizationModalPrice: (newPrice) => {

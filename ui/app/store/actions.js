@@ -2170,7 +2170,7 @@ export function setSwapsTxGasLimit (gasLimit) {
   }
 }
 
-export function setSwapsTxGasParams (gasLimit, gasPrice) {
+export function customSwapsGasParamsUpdated (gasLimit, gasPrice) {
   return async (dispatch) => {
     await promisifiedBackground.setSwapsTxGasPrice(gasPrice)
     await promisifiedBackground.setSwapsTxGasLimit(gasLimit, true)
