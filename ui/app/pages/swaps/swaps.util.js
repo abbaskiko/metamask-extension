@@ -141,21 +141,23 @@ const AGGREGATOR_METADATA_VALIDATORS = [
   },
 ]
 
+const isValidDecimalNumber = (string) => !isNaN(string) && string.match(/^[.0-9]+$/u) && !isNaN(parseFloat(string))
+
 const SWAP_GAS_PRICE_VALIDATOR = [
   {
     property: 'SafeGasPrice',
     type: 'string',
-    validator: (string) => !isNaN(string) && !isNaN(parseFloat(string)),
+    validator: isValidDecimalNumber,
   },
   {
     property: 'ProposeGasPrice',
     type: 'string',
-    validator: (string) => !isNaN(string) && !isNaN(parseFloat(string)),
+    validator: isValidDecimalNumber,
   },
   {
     property: 'FastGasPrice',
     type: 'string',
-    validator: (string) => !isNaN(string) && !isNaN(parseFloat(string)),
+    validator: isValidDecimalNumber,
   },
 ]
 
