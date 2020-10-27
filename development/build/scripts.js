@@ -328,27 +328,27 @@ function createScriptTasks ({ browserPlatforms, livereload }) {
     const SEGMENT_LEGACY_WRITE_KEY = opts.testing ? undefined : conf.SEGMENT_LEGACY_WRITE_KEY
 
     // Inject variables into bundle
-    bundler.transform(envify({
-      METAMASK_DEBUG: opts.devMode,
-      METAMASK_ENVIRONMENT: environment,
-      METAMETRICS_PROJECT_ID: process.env.METAMETRICS_PROJECT_ID,
-      NODE_ENV: opts.devMode ? 'development' : 'production',
-      IN_TEST: opts.testing ? 'true' : false,
-      PUBNUB_SUB_KEY: process.env.PUBNUB_SUB_KEY || '',
-      PUBNUB_PUB_KEY: process.env.PUBNUB_PUB_KEY || '',
-      ETH_GAS_STATION_API_KEY: process.env.ETH_GAS_STATION_API_KEY || '',
-      CONF: opts.devMode ? conf : ({}),
-      SENTRY_DSN: process.env.SENTRY_DSN,
-      INFURA_PROJECT_ID: (
-        opts.testing
-          ? '00000000000000000000000000000000'
-          : conf.INFURA_PROJECT_ID
-      ),
-      SEGMENT_WRITE_KEY: environment === 'production' ? SEGMENT_PROD_WRITE_KEY : SEGMENT_DEV_WRITE_KEY,
-      SEGMENT_LEGACY_WRITE_KEY: environment === 'production' ? process.env.SEGMENT_LEGACY_WRITE_KEY : SEGMENT_LEGACY_WRITE_KEY,
-    }), {
-      global: true,
-    })
+    // bundler.transform(envify({
+    //   METAMASK_DEBUG: opts.devMode,
+    //   METAMASK_ENVIRONMENT: environment,
+    //   METAMETRICS_PROJECT_ID: process.env.METAMETRICS_PROJECT_ID,
+    //   NODE_ENV: opts.devMode ? 'development' : 'production',
+    //   IN_TEST: opts.testing ? 'true' : false,
+    //   PUBNUB_SUB_KEY: process.env.PUBNUB_SUB_KEY || '',
+    //   PUBNUB_PUB_KEY: process.env.PUBNUB_PUB_KEY || '',
+    //   ETH_GAS_STATION_API_KEY: process.env.ETH_GAS_STATION_API_KEY || '',
+    //   CONF: opts.devMode ? conf : ({}),
+    //   SENTRY_DSN: process.env.SENTRY_DSN,
+    //   INFURA_PROJECT_ID: (
+    //     opts.testing
+    //       ? '00000000000000000000000000000000'
+    //       : conf.INFURA_PROJECT_ID
+    //   ),
+    //   SEGMENT_WRITE_KEY: environment === 'production' ? SEGMENT_PROD_WRITE_KEY : SEGMENT_DEV_WRITE_KEY,
+    //   SEGMENT_LEGACY_WRITE_KEY: environment === 'production' ? process.env.SEGMENT_LEGACY_WRITE_KEY : SEGMENT_LEGACY_WRITE_KEY,
+    // }), {
+    //   global: true,
+    // })
 
     // Live reload - minimal rebundle on change
     if (opts.devMode) {
