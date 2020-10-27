@@ -4,9 +4,9 @@
  */
 import deepFreeze from 'deep-freeze-strict'
 
+global.globalThis = global // eslint-disable-line node/no-unsupported-features/es-builtins
 require('lavamoat-core/lib/ses.umd.js')
 
-global.globalThis = global
 lockdown() // eslint-disable-line no-undef
 
 if (
