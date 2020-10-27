@@ -3,8 +3,10 @@
  * Freezes the Promise global and prevents its reassignment.
  */
 import deepFreeze from 'deep-freeze-strict'
+
 require('lavamoat-core/lib/ses.umd.js')
 
+global.globalThis = global
 lockdown() // eslint-disable-line no-undef
 
 if (

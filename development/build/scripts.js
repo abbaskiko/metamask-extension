@@ -7,7 +7,7 @@ const log = require('fancy-log')
 const { assign } = require('lodash')
 const watchify = require('watchify')
 const browserify = require('browserify')
-const envify = require('envify/custom')
+// const envify = require('envify/custom')
 const sourcemaps = require('gulp-sourcemaps')
 const sesify = require('sesify')
 const terser = require('gulp-terser-js')
@@ -323,9 +323,9 @@ function createScriptTasks ({ browserPlatforms, livereload }) {
     // the value of SEGMENT_WRITE_KEY that we envify is undefined then no events will be tracked
     // in the build. This is intentional so that developers can contribute to MetaMask without
     // inflating event volume.
-    const SEGMENT_PROD_WRITE_KEY = opts.testing ? undefined : process.env.SEGMENT_PROD_WRITE_KEY
-    const SEGMENT_DEV_WRITE_KEY = opts.testing ? undefined : conf.SEGMENT_WRITE_KEY
-    const SEGMENT_LEGACY_WRITE_KEY = opts.testing ? undefined : conf.SEGMENT_LEGACY_WRITE_KEY
+    // const SEGMENT_PROD_WRITE_KEY = opts.testing ? undefined : process.env.SEGMENT_PROD_WRITE_KEY
+    // const SEGMENT_DEV_WRITE_KEY = opts.testing ? undefined : conf.SEGMENT_WRITE_KEY
+    // const SEGMENT_LEGACY_WRITE_KEY = opts.testing ? undefined : conf.SEGMENT_LEGACY_WRITE_KEY
 
     // Inject variables into bundle
     // bundler.transform(envify({
