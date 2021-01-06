@@ -2291,9 +2291,9 @@
     safe-event-emitter "^1.0.1"
 
 "@metamask/etherscan-link@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@metamask/etherscan-link/-/etherscan-link-1.1.0.tgz#8c69f3659558074e48e85d52b3db36a3dd93e3e3"
-  integrity sha512-kdgz4OpAQM6kOSuXv8/yfW9kTKxPCFUxQGE4RKBzlpy9HkFcI6XWu3Uw3hOWPBFmI8uPwU8KxBIpdCts8jL7WA==
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@metamask/etherscan-link/-/etherscan-link-1.4.0.tgz#4631e9beec17de26b35b3ccd643ede2bae8ed811"
+  integrity sha512-4Bi72Y8/FQZbfTARyv+oWKGuECzdQ37cQKt88Eu5JPDrHAcRDZt4Bt7bWC9phUBrphAr1qbCKh9S90X9hW0pZg==
 
 "@metamask/forwarder@^1.1.0":
   version "1.1.0"
