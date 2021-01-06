@@ -2278,9 +2278,9 @@
     hdkey "0.8.0"
 
 "@metamask/eth-token-tracker@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@metamask/eth-token-tracker/-/eth-token-tracker-3.0.1.tgz#36b89f39c2af2ac41aa600dcedd2341704d94484"
-  integrity sha512-vlSKnI27zMCbaDOAHG5apYXoZgO833GUOP6/gkkzuKNEE7QZZCMti/9U6DYfrE8QvgbWyt/RjZkF3cTXXjBhCA==
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@metamask/eth-token-tracker/-/eth-token-tracker-3.1.0.tgz#1396c5d88401f3cd598b0c86d3a42951c8e78d73"
+  integrity sha512-SopDFnIu7lI8aloD9HGPEpqlcjZNzZ5BeXZqrNRSdSO+CGpuwmFoeyrCrgEmrlkKQvP8dQi6R6aYK/itFPhPrg==
   dependencies:
     deep-equal "^1.1.0"
     eth-block-tracker "^4.4.2"
@@ -8852,12 +8852,7 @@ deep-eql@^3.0.0:
   dependencies:
     type-detect "^4.0.0"
 
-deep-equal@^1.0.0, deep-equal@^1.0.1, deep-equal@~1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
-  integrity sha1-9dJgKStmDghO/0zbyfCK0yR0SLU=
-
-deep-equal@^1.1.0:
+deep-equal@^1.0.0, deep-equal@^1.0.1, deep-equal@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.1.1.tgz#b5c98c942ceffaf7cb051e24e1434a25a2e6076a"
   integrity sha512-yd9c5AdiqVcR+JjcwUQb9DkhJc8ngNr0MahEBGvDiJw8puWab2yZlh+nkasOnZP+EGTAP6rRp2JzJhJZzvNF8g==
@@ -8868,6 +8863,11 @@ deep-equal@^1.1.0:
     object-is "^1.0.1"
     object-keys "^1.1.1"
     regexp.prototype.flags "^1.2.0"
+
+deep-equal@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
+  integrity sha1-9dJgKStmDghO/0zbyfCK0yR0SLU=
 
 deep-extend@^0.6.0, deep-extend@~0.6.0:
   version "0.6.0"
